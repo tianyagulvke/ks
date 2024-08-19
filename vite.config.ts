@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import {resolve} from 'path'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -8,15 +8,19 @@ export default defineConfig({
     //全局配置scss
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "./src/assets/style/main.scss";`
-      }
-    }
+        additionalData: `@import "./src/assets/style/main.scss";`,
+      },
+    },
   },
   plugins: [react()],
+  server: {
+    port: 5173,
+    proxy: {},
+  },
   // 配置路径别名
   resolve: {
     alias: {
-      "@": resolve(__dirname, "src"),
-    }
-  }
-})
+      '@': resolve(__dirname, 'src'),
+    },
+  },
+});

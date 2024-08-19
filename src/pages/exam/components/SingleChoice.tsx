@@ -5,10 +5,12 @@ const SingleChoice = ({
   question,
   answer,
   resolve,
+  isExam,
 }: {
   question: Question;
   answer: Answer;
   resolve: Resolve;
+  isExam: boolean;
 }) => {
   const onChange = (e: RadioChangeEvent) => {
     // console.log(e.target.value);
@@ -17,7 +19,7 @@ const SingleChoice = ({
   return (
     <>
       <div style={{ marginBottom: '20px' }}>{`${question.id} ${question.title}`}</div>
-      <Radio.Group onChange={onChange} value={answer.answer}>
+      <Radio.Group onChange={onChange} value={answer.answer} disabled={!isExam}>
         <Space direction="vertical">
           {question.choices?.map((item, index) => {
             return <Radio value={index}>{item}</Radio>;

@@ -6,17 +6,19 @@ const Question = ({
   question,
   answer,
   resolve,
+  isExam = true,
 }: {
   question: QuestionType;
   answer: Answer;
   resolve: Resolve;
+  isExam: boolean;
 }) => {
   if (question.type === '1') {
-    return <SingleChoice question={question} answer={answer} resolve={resolve} />;
+    return <SingleChoice question={question} answer={answer} resolve={resolve} isExam={isExam} />;
   } else if (question.type === '2') {
-    return <Judge question={question} answer={answer} resolve={resolve} />;
+    return <Judge question={question} answer={answer} resolve={resolve} isExam={isExam} />;
   } else if (question.type === '3') {
-    return <Write question={question} answer={answer} resolve={resolve} />;
+    return <Write question={question} answer={answer} resolve={resolve} isExam={isExam} />;
   }
 };
 export default Question;

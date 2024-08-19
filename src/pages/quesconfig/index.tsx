@@ -1,5 +1,7 @@
-import { Button, Input, Form, InputNumber, Card } from 'antd';
+import { Button, Input, Form, InputNumber, Card, Radio } from 'antd';
+import { useState } from 'react';
 const QuesConfig = () => {
+  // const [] = useState(0);
   const onFinish = (values: any) => {
     console.log(values);
   };
@@ -19,29 +21,28 @@ const QuesConfig = () => {
         labelAlign="left"
       >
         <Form.Item
-          label="题目数量"
-          name="count"
-          rules={[{ required: true, message: '请输入题目数量!' }]}
+          label="岗位配置"
+          name="station"
+          rules={[{ required: true, message: '请输入岗位配置!' }]}
         >
-          <InputNumber style={{ width: '100%' }} />
+          <Radio.Group value={1}>
+            <Radio value={1}>Java后端</Radio>
+            <Radio value={2}>需求分析</Radio>
+            <Radio value={3}>web前端</Radio>
+          </Radio.Group>
         </Form.Item>
 
-        <Form.Item
-          label="及格线"
-          name="line"
-          rules={[{ required: true, message: '请输入及格线!' }]}
-        >
-          <InputNumber style={{ width: '100%' }} />
+        <Form.Item label="题型分值配置">
+          <Form.Item label="单选题" name="single" wrapperCol={{ span: 10 }}>
+            <InputNumber style={{ width: '100%' }} />
+          </Form.Item>
+          <Form.Item label="判断题" name="judge" wrapperCol={{ span: 10 }}>
+            <InputNumber style={{ width: '100%' }} />
+          </Form.Item>
+          <Form.Item label="简答题" name="write" wrapperCol={{ span: 10 }}>
+            <InputNumber style={{ width: '100%' }} />
+          </Form.Item>
         </Form.Item>
-
-        <Form.Item
-          label="答题时间"
-          name="time"
-          rules={[{ required: true, message: '请输入答题时间!' }]}
-        >
-          <InputNumber addonAfter="分钟" defaultValue={60} style={{ width: '100%' }} />
-        </Form.Item>
-
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
             Submit

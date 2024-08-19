@@ -5,7 +5,11 @@ import Mail from '@/pages/mail';
 import User from '@/pages/user';
 import Exam from '@/pages/exam';
 import ExamConfig from '@/pages/examconfig';
+import QuesConfig from '@/pages/quesconfig';
 import Err404 from '@/pages/error/404';
+import ImpQues from '@/pages/impques';
+import Check from '@/pages/exam/check';
+import Success from '@/pages/success';
 
 const routes = [
   {
@@ -29,15 +33,32 @@ const routes = [
         Component: User,
       },
       {
-        path: '/exam',
+        path: 'exam',
         Component: Exam,
       },
       {
-        path: '/examconfig',
+        path: 'examconfig',
         Component: ExamConfig,
+      },
+      {
+        path: 'quesconfig',
+        Component: QuesConfig,
+      },
+      {
+        path: '/impques',
+        Component: ImpQues,
+      },
+      {
+        path: '/check',
+        Component: Check,
+      },
+      {
+        path: '/success',
+        Component: Success,
       },
     ],
   },
+
   {
     path: '*',
     Component: Err404,

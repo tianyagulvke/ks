@@ -6,10 +6,12 @@ const Write = ({
   question,
   answer,
   resolve,
+  isExam,
 }: {
   question: Question;
   answer: Answer;
   resolve: Resolve;
+  isExam: boolean;
 }) => {
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     console.log(e.target.value);
@@ -18,7 +20,12 @@ const Write = ({
   return (
     <>
       <div style={{ marginBottom: '20px' }}>{`${question.id} ${question.title}`}</div>
-      <TextArea placeholder="请输入答案" value={answer.answer} onChange={onChange} />
+      <TextArea
+        placeholder="请输入答案"
+        value={answer.answer}
+        onChange={onChange}
+        disabled={!isExam}
+      />
     </>
   );
 };
