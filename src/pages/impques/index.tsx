@@ -2,14 +2,14 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload, Card } from 'antd';
 import { useState } from 'react';
 import type { UploadFile, RcFile } from 'antd/es/upload/interface';
-import { readAnswerDetail } from '@/api';
+import { importQuestion } from '@/api';
 const ImpQues = () => {
   const [uploading, setUploading] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const handleUpload = () => {
     const formData = new FormData();
     formData.append('file', fileList[0] as RcFile);
-    readAnswerDetail(formData).then((res) => {
+    importQuestion(formData).then((res) => {
       console.log(res);
       if (res.data.code === 200) {
         message.success('导入成功');

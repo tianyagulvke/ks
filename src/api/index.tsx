@@ -14,7 +14,9 @@ export const getAnswerRecordPage = (data?: object) => post('/answer/getAnswerRec
 
 export const readShortAnswerList = (data?: object) => post('/answer/readShortAnswerList', data);
 
-export const readAnswerDetail = (data?: object) =>
+export const readAnswerDetail = (data?: object) => post('/answer/readAnswerDetail', data);
+
+export const importQuestion = (data: any) =>
   axiosInstance.request({
     url: '/survey/importQuestion',
     method: 'post',
