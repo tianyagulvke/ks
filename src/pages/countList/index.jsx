@@ -103,6 +103,7 @@ export default function CountList() {
                 valid = false;
             } else {
                 updatedJdt.push(Number(item.score));
+                valid = true;
             }
         });
 
