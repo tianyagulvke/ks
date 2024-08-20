@@ -103,9 +103,22 @@ export default function CountList() {
                 valid = false;
             } else {
                 updatedJdt.push(Number(item.score));
-                valid = true;
             }
         });
+        // for (const item of jdtList) {
+        //     if (item.score === '') {
+        //         message.warning("请打分");
+        //         valid = false;
+        //     } else if (item.score > 100) {
+        //         message.error("分数不能超过100");
+        //         valid = false;
+        //     } else if (item.score < 0) {
+        //         message.error("分数不能小于0");
+        //         valid = false;
+        //     } else {
+        //         updatedJdt.push(Number(item.score));
+        //     }
+        // }
 
         if (valid) {
             setJdt(updatedJdt);
