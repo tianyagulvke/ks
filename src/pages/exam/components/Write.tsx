@@ -7,11 +7,13 @@ const Write = ({
   answer,
   resolve,
   isExam,
+  order,
 }: {
   question: Question;
   answer: Answer;
   resolve: Resolve;
   isExam: boolean;
+  order: number;
 }) => {
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     console.log(e.target.value);
@@ -19,7 +21,7 @@ const Write = ({
   };
   return (
     <>
-      <div style={{ marginBottom: '20px' }}>{`${question.id} ${question.title}`}</div>
+      <div style={{ marginBottom: '20px' }}>{`${order} ${question.title}`}</div>
       <TextArea
         placeholder="请输入答案"
         value={answer.answer}

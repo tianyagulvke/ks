@@ -7,18 +7,32 @@ const Question = ({
   answer,
   resolve,
   isExam = true,
+  order,
 }: {
   question: QuestionType;
   answer: Answer;
   resolve: Resolve;
   isExam: boolean;
+  order: number;
 }) => {
   if (question.type === '1') {
-    return <SingleChoice question={question} answer={answer} resolve={resolve} isExam={isExam} />;
+    return (
+      <SingleChoice
+        order={order}
+        question={question}
+        answer={answer}
+        resolve={resolve}
+        isExam={isExam}
+      />
+    );
   } else if (question.type === '2') {
-    return <Judge question={question} answer={answer} resolve={resolve} isExam={isExam} />;
+    return (
+      <Judge question={question} answer={answer} resolve={resolve} isExam={isExam} order={order} />
+    );
   } else if (question.type === '3') {
-    return <Write question={question} answer={answer} resolve={resolve} isExam={isExam} />;
+    return (
+      <Write question={question} answer={answer} resolve={resolve} isExam={isExam} order={order} />
+    );
   }
 };
 export default Question;

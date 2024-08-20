@@ -6,11 +6,13 @@ const Judge = ({
   answer,
   resolve,
   isExam,
+  order,
 }: {
   question: Question;
   answer: Answer;
   resolve: Resolve;
   isExam: boolean;
+  order: number;
 }) => {
   const onChange = (e: RadioChangeEvent) => {
     console.log(e.target.value);
@@ -18,11 +20,11 @@ const Judge = ({
   };
   return (
     <>
-      <div style={{ marginBottom: '20px' }}>{`${question.id} ${question.title}`}</div>
+      <div style={{ marginBottom: '20px' }}>{`${order} ${question.title}`}</div>
       <Radio.Group onChange={onChange} value={answer.answer} disabled={!isExam}>
         <Space direction="vertical">
-          <Radio value={0}>√</Radio>
-          <Radio value={1}>×</Radio>
+          <Radio value={'正确'}>√</Radio>
+          <Radio value={'错误'}>×</Radio>
         </Space>
       </Radio.Group>
     </>

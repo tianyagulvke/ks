@@ -8,6 +8,7 @@ export interface Question {
 export interface Answer {
   questionId: number;
   answer: string | number;
+  typeId: number;
 }
 
 export interface Resolve {
