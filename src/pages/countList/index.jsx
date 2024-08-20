@@ -37,7 +37,7 @@ export default function CountList() {
     ]);
     return (
         <div>
-            <Table dataSource={dataSource} columns={columns} />;
+            <Table dataSource={dataSource} columns={columns} />
         </div>
     )
 }
