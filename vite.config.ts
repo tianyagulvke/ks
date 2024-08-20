@@ -15,7 +15,16 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
-    proxy: {},
+    proxy: {
+      '/answer': {
+        target: 'http://10.6.250.68:8765', //"http://10.9.40.16:30200", ////  "http://10.6.250.115:8765", // ,
+        changeOrigin: true,
+      },
+      '/survey': {
+        target: 'http://10.6.250.68:8765', //"http://10.9.40.16:30200", ////  "http://10.6.250.115:8765", // ,
+        changeOrigin: true,
+      },
+    },
   },
   // 配置路径别名
   resolve: {
