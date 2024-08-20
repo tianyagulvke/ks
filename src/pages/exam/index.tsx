@@ -111,126 +111,137 @@ const Exam = () => {
   };
   if (isStart) {
     return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          flexDirection: 'column',
-          height: 'calc(100vh - 112px)',
-        }}
-      >
-        <div>
-          <div style={{ marginBottom: '10px' }}>
+      <div style={{ padding: '10px', height: '100vh', width: '100%' }}>
+        <Card style={{ width: '100%', height: 'calc(100vh - 20px)', padding: '10px' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              flexDirection: 'column',
+              height: 'calc(100vh - 80px)',
+            }}
+          >
+            <div>
+              <div style={{ marginBottom: '10px' }}>
+                <Row justify="space-between">
+                  <Countdown
+                    title="剩余时间"
+                    value={deadLine}
+                    format="HH:mm:ss"
+                    onFinish={subMethod}
+                  />
+                  <Button type="primary" onClick={subMethod}>
+                    提交
+                  </Button>
+                </Row>
+              </div>
+              {qusetionList.map(
+                (_, index) =>
+                  nowIndex === index && (
+                    <Question
+                      order={index + 1}
+                      key={qusetionList[index].id}
+                      question={qusetionList[index]}
+                      answer={answerList[index]}
+                      resolve={(value) => {
+                        resolve(index, value);
+                      }}
+                    />
+                  )
+              )}
+            </div>
             <Row justify="space-between">
-              <Countdown title="剩余时间" value={deadLine} format="HH:mm:ss" />
-              <Button type="primary" onClick={subMethod}>
-                提交
+              <Button
+                disabled={nowIndex === 0}
+                type="primary"
+                onClick={() => {
+                  setNowIndex(nowIndex - 1);
+                }}
+              >
+                上一题
+              </Button>
+              <Button
+                type="primary"
+                disabled={nowIndex === qusetionList.length - 1}
+                onClick={() => {
+                  setNowIndex(nowIndex + 1);
+                }}
+              >
+                下一题
               </Button>
             </Row>
           </div>
-          {qusetionList.map(
-            (_, index) =>
-              nowIndex === index && (
-                <Question
-                  order={index + 1}
-                  key={qusetionList[index].id}
-                  question={qusetionList[index]}
-                  answer={answerList[index]}
-                  resolve={(value) => {
-                    resolve(index, value);
-                  }}
-                />
-              )
-          )}
-        </div>
-        <Row justify="space-between">
-          <Button
-            disabled={nowIndex === 0}
-            type="primary"
-            onClick={() => {
-              setNowIndex(nowIndex - 1);
-            }}
-          >
-            上一题
-          </Button>
-          <Button
-            type="primary"
-            disabled={nowIndex === qusetionList.length - 1}
-            onClick={() => {
-              setNowIndex(nowIndex + 1);
-            }}
-          >
-            下一题
-          </Button>
-        </Row>
+        </Card>
       </div>
     );
   } else {
     return (
-      <Card style={{ width: '100%', height: 'calc(100vh - 112px)', padding: '10px' }}>
-        {/* <h2 style={{ fontSize: '30px', lineHeight: '50px' }}>题目配置</h2> */}
-        <Form
-          name="basic"
-          labelCol={{ span: 5 }}
-          wrapperCol={{ span: 16 }}
-          autoComplete="off"
-          labelAlign="left"
-          form={examForm}
-        >
-          <Form.Item
-            label="应聘岗位"
-            name="station"
-            rules={[{ required: true, message: '请输入岗位配置!' }]}
+      <div style={{ padding: '10px', height: '100vh', width: '100%' }}>
+        <Card style={{ width: '100%', height: 'calc(100vh - 20px)', padding: '10px' }}>
+          {/* <h2 style={{ fontSize: '30px', lineHeight: '50px' }}>题目配置</h2> */}
+          <Form
+            name="basic"
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 16 }}
+            autoComplete="off"
+            labelAlign="left"
+            form={examForm}
           >
-            <Radio.Group value={'java'}>
-              <Radio value={'2'}>Java后端</Radio>
-              <Radio value={'4'}>需求分析</Radio>
-              <Radio value={'3'}>web前端</Radio>
-            </Radio.Group>
-          </Form.Item>
+            <Form.Item
+              label="应聘岗位"
+              name="station"
+              rules={[{ required: true, message: '请输入岗位配置!' }]}
+            >
+              <Radio.Group value={'java'}>
+                <Radio value={'2'}>Java后端</Radio>
+                <Radio value={'4'}>需求分析</Radio>
+                <Radio value={'3'}>web前端</Radio>
+              </Radio.Group>
+            </Form.Item>
 
-          <Form.Item
-            label="姓名"
-            name="userName"
-            wrapperCol={{ span: 10 }}
-            rules={[{ required: true, message: '请输入姓名!' }]}
-          >
-            <Input style={{ width: '100%' }} />
-          </Form.Item>
-          <Form.Item
-            label="性别"
-            name="gender"
-            wrapperCol={{ span: 10 }}
-            rules={[{ required: true, message: '请输入性别!' }]}
-          >
-            <Radio.Group value={'男'}>
-              <Radio value={'男'}>男</Radio>
-              <Radio value={'女'}>女</Radio>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item
-            label="手机号"
-            name="phone"
-            wrapperCol={{ span: 10 }}
-            rules={[{ required: true, message: '请输入手机号!' }]}
-          >
-            <Input style={{ width: '100%' }} />
-          </Form.Item>
-          <Form.Item
-            label="邮箱"
-            name="email"
-            wrapperCol={{ span: 10 }}
-            rules={[{ required: true, message: '请输入邮箱!' }]}
-          >
-            <Input style={{ width: '100%' }} onChange={getEmail} />
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" onClick={startExam}>
-              开始考试
-            </Button>
-          </Form.Item>
-        </Form>
-      </Card>
+            <Form.Item
+              label="姓名"
+              name="userName"
+              wrapperCol={{ span: 10 }}
+              rules={[{ required: true, message: '请输入姓名!' }]}
+            >
+              <Input style={{ width: '100%' }} />
+            </Form.Item>
+            <Form.Item
+              label="性别"
+              name="gender"
+              wrapperCol={{ span: 10 }}
+              rules={[{ required: true, message: '请输入性别!' }]}
+            >
+              <Radio.Group value={'男'}>
+                <Radio value={'男'}>男</Radio>
+                <Radio value={'女'}>女</Radio>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item
+              label="手机号"
+              name="phone"
+              wrapperCol={{ span: 10 }}
+              rules={[{ required: true, message: '请输入手机号!' }]}
+            >
+              <Input style={{ width: '100%' }} />
+            </Form.Item>
+            <Form.Item
+              label="邮箱"
+              name="email"
+              wrapperCol={{ span: 10 }}
+              rules={[{ required: true, message: '请输入邮箱!' }]}
+            >
+              <Input style={{ width: '100%' }} onChange={getEmail} />
+            </Form.Item>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+              <Button type="primary" onClick={startExam}>
+                开始考试
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
+      </div>
     );
   }
 };

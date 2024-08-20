@@ -1,6 +1,7 @@
 import { RadioChangeEvent } from 'antd/lib';
 import { Question, Answer, Resolve } from '../type';
 import { Radio, Space } from 'antd';
+import { geneAbc } from '@/utils/data';
 const SingleChoice = ({
   question,
   answer,
@@ -26,7 +27,7 @@ const SingleChoice = ({
           {question.choices?.map((item, index) => {
             return (
               <Radio value={item} key={index}>
-                {item}
+                {geneAbc(index) + ' ' + item}
               </Radio>
             );
           })}

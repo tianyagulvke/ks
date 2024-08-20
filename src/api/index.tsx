@@ -1,4 +1,4 @@
-import { get, post } from '@/utils/request';
+import { get, post, axiosInstance } from '@/utils/request';
 
 // 生成试卷
 export const getImpQues = async (data: any) => {
@@ -14,4 +14,12 @@ export const getAnswerRecordPage = (data?: object) => post('/answer/getAnswerRec
 
 export const readShortAnswerList = (data?: object) => post('/answer/readShortAnswerList', data);
 
-export const readAnswerDetail = (data?: object) => post('/answer/readAnswerDetail', data);
+export const readAnswerDetail = (data?: object) =>
+  axiosInstance.request({
+    url: '/survey/importQuestion',
+    method: 'post',
+    data,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
