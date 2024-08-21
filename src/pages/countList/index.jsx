@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Pagination, Button, Modal, Input, message, Card } from "antd";
+import { Table, Pagination, Button, Modal, Input, message, Card, Select } from "antd";
 import { getAnswerRecordPage, readShortAnswerList, readAnswerDetail } from '@/api';
+import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
 export default function CountList() {
     useEffect(() => {
         fetchData(page.pageNum, page.pageSize)
@@ -33,6 +34,9 @@ export default function CountList() {
         getAnswerRecordPage({
             pageNum,
             pageSize,
+            userName,
+            phone,
+            surveyName,
         })
             .then((res) => {
                 const data = res.data.data.list.map(item => ({
@@ -77,13 +81,20 @@ export default function CountList() {
             render: (text) => convertTemplateStringToDate(text),
         },
         {
-            title: '分数',
+            title: '分数（60分及格）',
             dataIndex: 'score',
+            sorter: {
+                compare: (a, b) => a.score - b.score,
+            },
         },
         {
             title: '操作',
             render: (text, record) => (
-                <a onClick={() => Marking(record)}>阅卷</a>
+                <>
+                    <a onClick={() => Marking(record)}>阅卷</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a onClick={() => sjMarking(record)}>查看详情</a>
+                </>
             ),
         }
     ]);
@@ -163,8 +174,54 @@ export default function CountList() {
         item.score = newScore;
         setJdtList(newList);
     };
+    const [userName, setUserName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [surveyName, setSurveyName] = useState('1');
+
+    const [sjisModalOpen, setSjIsModalOpen] = useState(false);
+    const [msList, setMsList] = useState([]);
+    const [sjAnswerId, setSjAnswerId] = useState();
+    const sjMarking = (item) => {
+        setSjIsModalOpen(true); // 打开模态框
+        setSjAnswerId(item.id)
+    }
+    const sjhandleOk = () => {
+        setSjIsModalOpen(false);
+    };
+    const sjhandleCancel = () => {
+        setSjIsModalOpen(false);
+    }
+    const handleChange = (value) => {
+        setSurveyName(value)
+    };
+    const popSet = () => {
+        setUserName('');
+        setPhone('');
+        setSurveyName('1');
+    }
     return (
         <Card style={{ height: 'calc(100vh - 112px)', overflowY: 'auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <div style={{ margin: '0px 0 20px 0px' }}><span>姓名：</span>
+                    <Input style={{ width: '220px' }} placeholder="请输入姓名" value={userName} onChange={(e) => setUserName(e.target.value)} /></div>
+                <div style={{ margin: '0px 0 20px 20px' }}><span>手机号：</span>
+                    <Input style={{ width: '220px' }} placeholder="请输入手机号" value={phone} onChange={(e) => setPhone(e.target.value)} /></div>
+                <div style={{ margin: '0px 0 20px 20px' }}><span>应聘岗位：</span>
+                    <Select
+                        defaultValue="全部"
+                        value={surveyName}
+                        style={{ width: 220 }}
+                        onChange={handleChange}
+                        options={[
+                            { value: '1', label: '全部' },
+                            { value: '2', label: 'java后端' },
+                            { value: '3', label: 'web前端' },
+                            { value: '4', label: '需求分析' },
+                        ]}
+                    /></div>
+                <Button type="primary" style={{ margin: '0px 0 20px 20px' }} onClick={() => fetchData(1, 10)} icon={<SearchOutlined />}>查询</Button>
+                <Button type="default" style={{ margin: '0px 0 20px 20px' }} onClick={popSet} icon={<ReloadOutlined />}>重置</Button>
+            </div>
             <Table dataSource={dataSource} columns={columns} pagination={false} />
             <br />
             <Pagination
@@ -179,9 +236,9 @@ export default function CountList() {
                 <div>{
                     jdtList.map((item) => {
                         return <div key={item.key}>
-                            <p>题目：{item.question}</p>
-                            <p>答案：{item.ref}</p>
-                            <p style={{ display: 'flex', alignItems: 'center' }}>
+                            <p style={{ lineHeight: '32px' }}>题目：{item.question}</p>
+                            <p style={{ lineHeight: '32px' }}>答案：{item.ret}</p>
+                            <p style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
                                 <span>分数：</span>
                                 <Input style={{ width: '120px', heighe: '22px' }} placeholder="简答题分数" min={0} max={100} type="number" value={item.score} onChange={(e) => fsChange(item, e)} />
                             </p>
@@ -189,6 +246,9 @@ export default function CountList() {
                         </div>
                     })
                 }</div>
+            </Modal>
+            <Modal title="面试详情" open={sjisModalOpen} onOk={sjhandleOk} onCancel={sjhandleCancel}>
+                <div>123</div>
             </Modal>
         </Card>
     )
