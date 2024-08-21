@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Pagination, Button, Modal, Input, message, Card, Select, Radio } from "antd";
+import { Table, Pagination, Button, Modal, Input, message, Card, Select, Radio, Empty } from "antd";
 import { getAnswerRecordPage, readShortAnswerList, readAnswerDetail } from '@/api';
 import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
 import './index.scss'
@@ -282,7 +282,8 @@ export default function CountList() {
                             </div>
                         ))
                     ) : (
-                        <p style={{ lineHeight: '100px', textAlign: 'center' }}>暂无答题记录</p>
+                        // <p style={{ lineHeight: '100px', textAlign: 'center' }}>暂无答题记录</p>
+                        <Empty />
                     )}
                 </div>
             </Modal>
@@ -347,7 +348,8 @@ export default function CountList() {
 
                                 </>
                             ) : (
-                                <p style={{ lineHeight: '100px', textAlign: 'center' }}>暂无答题记录</p>
+                                // <p style={{ lineHeight: '100px', textAlign: 'center' }}>暂无答题记录</p>
+                                <Empty />
                             )}
                         </div>
                     </div>
