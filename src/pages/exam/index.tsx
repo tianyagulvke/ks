@@ -7,6 +7,7 @@ import { getImpQues, submitImpQues } from '@/api';
 import { use } from 'echarts/types/src/extension.js';
 
 const { Countdown } = Statistic;
+const deadlineStart = Date.now() + 1000 * 60 * 30 + 1000;
 
 const Exam = () => {
   const navigate = useNavigate();
@@ -16,8 +17,7 @@ const Exam = () => {
   const [qusetionList, setQuestionList] = useState(myQuestionList);
   const [answerList, setAnswerList] = useState(myAnswerList);
   const [nowIndex, setNowIndex] = useState(0);
-  const deadline = Date.now() + 1000 * 60 * 30 + 1000;
-  const [deadLine, setDeadLine] = useState(deadline);
+  const [deadLine, setDeadLine] = useState(deadlineStart);
   const [email, setEmail] = useState('');
   const resolve = (index: number, value: string | number) => {
     const newAnswerList = [...answerList];
@@ -77,6 +77,7 @@ const Exam = () => {
     if (respons) {
       if (respons.data.code === 200) {
         setIsStart(true);
+        setDeadLine(Date.now() + 1000 * 60 * 30 + 1000);
         setSurveyId(respons.data.data.surveyId);
         const [quelist, anslist] = tranQuestion(respons.data.data.surveyList);
         setQuestionList(quelist);
@@ -146,6 +147,7 @@ const Exam = () => {
                       resolve={(value) => {
                         resolve(index, value);
                       }}
+                      right={''}
                     />
                   )
               )}
@@ -177,22 +179,44 @@ const Exam = () => {
   } else {
     return (
       <div style={{ padding: '10px', height: '100vh', width: '100%' }}>
-        <Card style={{ width: '100%', height: 'calc(100vh - 20px)', padding: '10px' }}>
+        <Card
+          style={{
+            width: '100%',
+            height: 'calc(100vh - 20px)',
+            padding: '10px',
+            overflowY: 'auto',
+          }}
+        >
           {/* <h2 style={{ fontSize: '30px', lineHeight: '50px' }}>题目配置</h2> */}
           <Form
+            style={{ maxWidth: '500px', margin: '0 auto' }}
             name="basic"
             labelCol={{ span: 5 }}
-            wrapperCol={{ span: 16 }}
+            wrapperCol={{ span: 19 }}
             autoComplete="off"
             labelAlign="left"
             form={examForm}
+            initialValues={{
+              station: '2', // 设置初始值
+              gender: '男',
+            }}
           >
+            <h2
+              style={{
+                fontSize: '40px',
+                textAlign: 'center',
+                lineHeight: '80px',
+                marginBottom: '40px',
+              }}
+            >
+              面试须知
+            </h2>
             <Form.Item
               label="应聘岗位"
               name="station"
               rules={[{ required: true, message: '请输入岗位配置!' }]}
             >
-              <Radio.Group value={'java'}>
+              <Radio.Group>
                 <Radio value={'2'}>Java后端</Radio>
                 <Radio value={'4'}>需求分析</Radio>
                 <Radio value={'3'}>web前端</Radio>
@@ -202,18 +226,24 @@ const Exam = () => {
             <Form.Item
               label="姓名"
               name="userName"
-              wrapperCol={{ span: 10 }}
-              rules={[{ required: true, message: '请输入姓名!' }]}
+              wrapperCol={{ span: 19 }}
+              rules={[
+                { required: true, message: '请输入姓名!' },
+                {
+                  pattern: /^[\u4e00-\u9fa5]{2,}$/,
+                  message: '输入正确的姓名',
+                },
+              ]}
             >
               <Input style={{ width: '100%' }} />
             </Form.Item>
             <Form.Item
               label="性别"
               name="gender"
-              wrapperCol={{ span: 10 }}
+              wrapperCol={{ span: 19 }}
               rules={[{ required: true, message: '请输入性别!' }]}
             >
-              <Radio.Group value={'男'}>
+              <Radio.Group>
                 <Radio value={'男'}>男</Radio>
                 <Radio value={'女'}>女</Radio>
               </Radio.Group>
@@ -221,22 +251,34 @@ const Exam = () => {
             <Form.Item
               label="手机号"
               name="phone"
-              wrapperCol={{ span: 10 }}
-              rules={[{ required: true, message: '请输入手机号!' }]}
+              wrapperCol={{ span: 19 }}
+              rules={[
+                { required: true, message: '请输入手机号!' },
+                {
+                  pattern: /^1[3-9]\d{9}$/,
+                  message: '请输入正确的手机号码',
+                },
+              ]}
             >
               <Input style={{ width: '100%' }} />
             </Form.Item>
             <Form.Item
               label="邮箱"
               name="email"
-              wrapperCol={{ span: 10 }}
-              rules={[{ required: true, message: '请输入邮箱!' }]}
+              wrapperCol={{ span: 19 }}
+              rules={[
+                { required: true, message: '请输入邮箱!' },
+                {
+                  pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  message: '请输入有效的电子邮件地址',
+                },
+              ]}
             >
               <Input style={{ width: '100%' }} onChange={getEmail} />
             </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item wrapperCol={{ offset: 0, span: 24 }} style={{ textAlign: 'center' }}>
               <Button type="primary" onClick={startExam}>
-                开始考试
+                开始面试
               </Button>
             </Form.Item>
           </Form>
