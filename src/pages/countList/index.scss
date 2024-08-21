@@ -1,0 +1,29 @@
+.msrlist {
+  .ant-radio-wrapper-disabled {
+    color: rgb(0, 0, 0);
+  }
+  .ant-radio-disabled {
+    color: rgb(0, 0, 0);
+  }
+  //   display: grid;
+  //   grid-template-columns: 1fr 1fr;
+  .msrlistp {
+    line-height: 32px;
+    // display: inline-block;
+    // margin-left: 20px;
+  }
+  .msrlistp:first-child {
+    margin: 0;
+  }
+  //   .msrlistspan {
+  //     display: inline-block;
+  //     width: 42px;
+  //     text-align: right;
+  //   }
+  .dtxqBox::-webkit-scrollbar {
+    width: 10px; /* 滚动条的宽度 */
+  }
+  .dtxqBox::-webkit-scrollbar-track {
+    background: #ffffff; /* 轨道的背景色 */
+  }
+}
