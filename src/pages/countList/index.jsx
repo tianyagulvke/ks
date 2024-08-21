@@ -283,7 +283,7 @@ export default function CountList() {
                         ))
                     ) : (
                         // <p style={{ lineHeight: '100px', textAlign: 'center' }}>暂无答题记录</p>
-                        <Empty />
+                        <Empty description="暂无答题记录" />
                     )}
                 </div>
             </Modal>
@@ -349,7 +349,7 @@ export default function CountList() {
                                 </>
                             ) : (
                                 // <p style={{ lineHeight: '100px', textAlign: 'center' }}>暂无答题记录</p>
-                                <Empty />
+                                <Empty description="暂无答题记录" />
                             )}
                         </div>
                     </div>
