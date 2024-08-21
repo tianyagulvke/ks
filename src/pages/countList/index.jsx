@@ -183,7 +183,7 @@ export default function CountList() {
                             <p>答案：{item.ref}</p>
                             <p style={{ display: 'flex', alignItems: 'center' }}>
                                 <span>分数：</span>
-                                <Input style={{ width: '120px', heighe: '22px' }} placeholder="简答题分数" type="number" value={item.score} onChange={(e) => fsChange(item, e)} />
+                                <Input style={{ width: '120px', heighe: '22px' }} placeholder="简答题分数" min={0} max={100} type="number" value={item.score} onChange={(e) => fsChange(item, e)} />
                             </p>
                             <br />
                         </div>
