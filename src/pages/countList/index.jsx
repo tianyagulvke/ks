@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Pagination, Button, Modal, Input, message } from "antd";
+import { Table, Pagination, Button, Modal, Input, message, Card } from "antd";
 import { getAnswerRecordPage, readShortAnswerList, readAnswerDetail } from '@/api';
 export default function CountList() {
     useEffect(() => {
@@ -164,7 +164,7 @@ export default function CountList() {
         setJdtList(newList);
     };
     return (
-        <div>
+        <Card style={{ height: 'calc(100vh - 112px)', overflowY: 'auto' }}>
             <Table dataSource={dataSource} columns={columns} pagination={false} />
             <br />
             <Pagination
@@ -190,6 +190,6 @@ export default function CountList() {
                     })
                 }</div>
             </Modal>
-        </div>
+        </Card>
     )
 }
