@@ -35,6 +35,7 @@ export default function CountList() {
         });
         fetchData(current, pageSize);
     }
+    const [cxCode200, setCxCode200] = useState(false)
     const fetchData = (pageNum, pageSize) => {
         getAnswerRecordPage({
             pageNum,
@@ -53,6 +54,11 @@ export default function CountList() {
                     ...prevPage,
                     total: res.data.data.total
                 }));
+                if (res.data.code === 200) {
+                    setCxCode200(true)
+                } else {
+                    message.error(res.data.msg)
+                }
             });
     };
     const [dataSource, setDataSource] = useState([]);
@@ -146,7 +152,9 @@ export default function CountList() {
                 shortScores: updatedJdt
             }).then(res => {
                 if (res.data.code === 200) {
-                    message.success("阅卷成功");
+                    if (jdtList.length > 0) {
+                        message.success("阅卷成功");
+                    }
                     setIsModalOpen(false);
                     fetchData(page.pageNum, page.pageSize);
                 }
@@ -219,6 +227,9 @@ export default function CountList() {
         message.success("重置成功");
     }
     const showList = () => {
+        if (cxCode200 === true) {
+            message.success("查询成功");
+        }
         fetchData(1, page.pageSize);
         setPage({
             ...page,
@@ -248,7 +259,7 @@ export default function CountList() {
                 <Button type="primary" style={{ margin: '0px 0 20px 20px' }} onClick={showList} icon={<SearchOutlined />}>查询</Button>
                 <Button type="default" style={{ margin: '0px 0 20px 20px' }} onClick={popSet} icon={<ReloadOutlined />}>重置</Button>
             </div>
-            <Table dataSource={dataSource} columns={columns} pagination={false} />
+            <Table dataSource={dataSource} columns={columns} pagination={false} rowClassName="custom-row" />
             <br />
             <Pagination
                 showSizeChanger
@@ -287,7 +298,11 @@ export default function CountList() {
                     )}
                 </div>
             </Modal>
-            <Modal title="面试详情" open={sjisModalOpen} onOk={sjhandleOk} onCancel={sjhandleCancel}>
+            <Modal title="面试详情" open={sjisModalOpen} onOk={sjhandleOk} onCancel={sjhandleCancel} footer={[
+                <Button key="ok" type="primary" onClick={sjhandleOk}>
+                    确定
+                </Button>,
+            ]}>
                 <div className="msrlist">
                     <p className="msrlistp"><span className="msrlistspan">姓名：</span>{xqList.userName}</p>
                     <p className="msrlistp"><span className="msrlistspan">性别：</span>{xqList.gender}</p>
@@ -297,10 +312,9 @@ export default function CountList() {
                     <hr />
                     <div>
                         <div>答题详情：</div>
-                        <div className='dtxqBox' style={{ width: '100%', minHeight: '0', maxHeight: '400px', overflowY: 'auto' }}>
+                        <div className='dtxqBox' style={{ width: '100%', minHeight: '0', maxHeight: '310px', overflowY: 'auto' }}>
                             {msListsingleMap.length > 0 || msListshortAnswer.length > 0 ? (
                                 <>
-
                                     <div>
                                         {msListsingleMap.map((item, index) => (
                                             <div key={index}>

@@ -27,3 +27,10 @@
     background: #ffffff; /* 轨道的背景色 */
   }
 }
+.custom-row {
+  height: 46px; /* 设置行高 */
+}
+
+.ant-table-cell {
+  padding: 11px !important; /* 调整单元格内边距以适应行高 */
+}
