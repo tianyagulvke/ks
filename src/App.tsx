@@ -1,9 +1,12 @@
 // import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
-import './App.scss'
-import {RouterProvider } from 'react-router-dom'
-import router from './router'
+import './App.scss';
+import { RouterProvider, BrowserRouter, HashRouter } from 'react-router-dom';
+import router from './router';
+import AuthRoute from '@/router/authroute';
+import GetRouter from '@/router/getroute';
+
 const App = () => {
   // const [count, setCount] = useState(0)
 
@@ -32,10 +35,17 @@ const App = () => {
   //   </>
   // )
   return (
-    <div className='app'>
-      <RouterProvider router={router} />
+    <div className="app">
+      {/* <AuthRoute>
+        <RouterProvider router={router} />
+      </AuthRoute> */}
+      <HashRouter>
+        <AuthRoute>
+          <GetRouter />
+        </AuthRoute>
+      </HashRouter>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

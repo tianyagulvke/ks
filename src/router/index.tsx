@@ -11,7 +11,8 @@ import ImpQues from '@/pages/impques';
 import Check from '@/pages/exam/check';
 import Success from '@/pages/success';
 import CountList from '@/pages/countlist';
-const routes = [
+import Login from '@/pages/login';
+export const routes = [
   {
     path: '/',
     Component: Layout,
@@ -67,6 +68,10 @@ const routes = [
   {
     path: '*',
     Component: Err404,
+  },
+  {
+    path: '/login',
+    Component: Login,
   },
 ];
 const routesMap = createBrowserRouter(routes);

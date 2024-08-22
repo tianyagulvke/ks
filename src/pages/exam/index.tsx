@@ -69,7 +69,7 @@ const Exam = () => {
       name: res.userName,
       gender: res.gender,
       phone: res.phone,
-      // email: res.email,
+      email: res.email,
       // startDate: new Date(),
     };
     const respons = await getImpQues(data);
