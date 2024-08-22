@@ -18,6 +18,7 @@ const Login = () => {
   return (
     <div style={{ padding: '10px', height: '100vh', width: '100%' }}>
       <Card style={{ width: '100%', height: 'calc(100vh - 20px)', padding: '10px' }}>
+        <div style={{ fontSize: '40px', textAlign: 'center', marginBottom: '20px' }}>考试系统</div>
         <Form
           form={logForm}
           name="basic"
@@ -26,7 +27,7 @@ const Login = () => {
           wrapperCol={{ span: 19 }}
           initialValues={{ remember: true }}
           autoComplete="off"
-          style={{ maxWidth: '500px', margin: '80px auto' }}
+          style={{ maxWidth: '500px', margin: '20px auto' }}
         >
           <Form.Item
             label="用户名"
