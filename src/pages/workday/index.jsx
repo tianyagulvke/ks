@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Calendar, Input, Tag, Button, Modal, Select, message, DatePicker, Empty } from 'antd';
 import { countDay, manualSet } from '@/api/workday'
-import './index.scss';
+import "./styles.scss"
 const { RangePicker } = DatePicker;
 
 export default function Workday() {
@@ -157,23 +157,26 @@ export default function Workday() {
         const { label, color } = item ? getLabelAndColor(item.isDayOff) : getLabelAndColor('');
 
         return (
-            <div>
-                <div>
-                    <Tag color={color}>
-                        {label}
-                    </Tag>
-                </div>
-                <div><p>备注：</p>{item ? item.name : ''}</div>
-            </div>
+            allList && allList.length > 0 && (
+                < div >
+                    <div>
+                        <Tag color={color}>
+                            {label}
+                        </Tag>
+                    </div>
+                    <div><p>备注：</p>{item ? item.name : ''}</div>
+                </div >
+            )
         );
     };
     return (
-        <Card style={{ height: 'calc(100vh - 112px)', overflowY: 'auto' }}>
+        <Card className='wordDaycard' style={{ height: 'calc(100vh - 112px)', overflowY: 'auto' }}>
             <div style={{ marginBottom: '-44px' }}>
                 <Button type="primary" onClick={editTime}>编辑</Button>
                 <Button style={{ marginLeft: '12px' }} type="primary" onClick={showTimeBtn}>查询</Button>
             </div>
             <Calendar
+                className='wordDaycalendar'
                 onChange={handleDateSelect}
                 cellRender={cellRender}
             />

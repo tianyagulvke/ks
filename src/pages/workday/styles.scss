@@ -1,0 +1,20 @@
+.wordDaycard {
+  .ant-picker-calendar-date-content {
+    height: 76px !important;
+  }
+
+  .ant-card::-webkit-scrollbar {
+    width: 10px;
+    /* 滚动条的宽度 */
+  }
+
+  .ant-card::-webkit-scrollbar-track {
+    background: #ffffff;
+    /* 轨道的背景色 */
+  }
+  .wordDaycalendar {
+    .ant-radio-group {
+      display: none;
+    }
+  }
+}
