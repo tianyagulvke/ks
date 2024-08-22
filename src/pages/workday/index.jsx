@@ -113,6 +113,8 @@ export default function Workday() {
                 setHolidayCount(res.data.data.holidayCount);
                 setIssetHolidayCount(res.data.data.setHolidayCount);
                 setWorkDayCount(res.data.data.workDayCount);
+            }).catch(err => {
+                message.error("网络异常 请检查网络设置");
             })
         } else {
             message.error("请选择时间范围");
