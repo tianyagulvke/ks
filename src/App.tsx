@@ -39,11 +39,11 @@ const App = () => {
       {/* <AuthRoute>
         <RouterProvider router={router} />
       </AuthRoute> */}
-      <HashRouter>
+      <BrowserRouter>
         <AuthRoute>
           <GetRouter />
         </AuthRoute>
-      </HashRouter>
+      </BrowserRouter>
     </div>
   );
 };
