@@ -57,6 +57,8 @@ export default function Workday() {
                 setSurveyName(res.data.data.hList[0].isDayOff.toString())
                 setNotes(res.data.data.hList[0].name)
                 setTimeModalOpen(true); // 打开时间选择模态框
+            }).catch(err => {
+                message.error("网络异常");
             })
         }
     }
