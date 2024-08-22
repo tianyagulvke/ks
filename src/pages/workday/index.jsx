@@ -58,7 +58,7 @@ export default function Workday() {
                 setNotes(res.data.data.hList[0].name)
                 setTimeModalOpen(true); // 打开时间选择模态框
             }).catch(err => {
-                message.error("网络异常");
+                message.error("网络异常 请检查网络设置");
             })
         }
     }
