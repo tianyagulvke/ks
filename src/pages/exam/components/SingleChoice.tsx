@@ -8,12 +8,14 @@ const SingleChoice = ({
   resolve,
   isExam,
   order,
+  right,
 }: {
   question: Question;
   answer: Answer;
   resolve: Resolve;
   isExam: boolean;
   order: number;
+  right: string;
 }) => {
   const onChange = (e: RadioChangeEvent) => {
     // console.log(e.target.value);
@@ -21,18 +23,23 @@ const SingleChoice = ({
   };
   return (
     <>
-      <div style={{ marginBottom: '20px' }}>{`${order} ${question.title}`}</div>
+      <div style={{ marginBottom: '20px' }}>{`${order}. ${question.title}`}</div>
       <Radio.Group onChange={onChange} value={answer.answer} disabled={!isExam}>
         <Space direction="vertical">
           {question.choices?.map((item, index) => {
             return (
               <Radio value={item} key={index}>
-                {geneAbc(index) + ' ' + item}
+                {geneAbc(index) + '. ' + item}
               </Radio>
             );
           })}
         </Space>
       </Radio.Group>
+      {!isExam && (
+        <div style={{ marginTop: '20px' }}>
+          正确答案：{right}，你的答案：{answer.answer}
+        </div>
+      )}
     </>
   );
 };
