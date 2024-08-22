@@ -12,6 +12,7 @@ import Check from '@/pages/exam/check';
 import Success from '@/pages/success';
 import CountList from '@/pages/countlist';
 import Login from '@/pages/login';
+import WorkDay from '@/pages/workday';
 export const routes = [
   {
     path: '/',
@@ -50,7 +51,10 @@ export const routes = [
         path: '/check',
         Component: Check,
       },
-
+      {
+        path: '/workday',
+        Component: WorkDay,
+      },
       {
         path: '/countlist',
         Component: CountList,

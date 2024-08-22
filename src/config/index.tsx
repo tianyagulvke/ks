@@ -63,6 +63,13 @@ const menuList: MenuListItem[] = [
     icon: "GithubOutlined",
     url: "/countList/index",
   },
+  {
+    path: "/workday",
+    name: "workday",
+    label: "工作日",
+    icon: "GithubOutlined",
+    url: "/workday/index",
+  },
   // {
   //   path: "/check",
   //   name: "check",
