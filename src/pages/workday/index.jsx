@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Card, Calendar, Input, Badge, Button, Modal, Select, message, DatePicker, Empty } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Card, Calendar, Input, Tag, Button, Modal, Select, message, DatePicker, Empty } from 'antd';
 import { countDay, manualSet } from '@/api/workday'
 import './index.scss';
 const { RangePicker } = DatePicker;
@@ -26,11 +26,14 @@ export default function Workday() {
                 setTimeModalOpen(false);
                 setSurveyName("100")
                 setNotes("")
+                renderMounted()
             })
         }
     };
     const TimehandleCancel = () => {
         setTimeModalOpen(false);
+        setSurveyName("100")
+        setNotes("")
     };
 
     const [surveyName, setSurveyName] = useState('100');
@@ -39,12 +42,22 @@ export default function Workday() {
     };
 
 
-    ////////////////
+    ////////////////编辑
+    const [editlist, setEditlist] = useState([]);
     const editTime = () => {
         if (selectedDate === null) {
             message.error("请选择日期");
         } else {
-            setTimeModalOpen(true); // 打开时间选择模态框
+            countDay({
+                "startDate": convertTemplateStringToDate(selectedDate),
+                "endDate": convertTemplateStringToDate(selectedDate)
+            }).then(res => {
+                console.log(res.data.data.hList);
+                setEditlist(res.data.data.hList);
+                setSurveyName(res.data.data.hList[0].isDayOff.toString())
+                setNotes(res.data.data.hList[0].name)
+                setTimeModalOpen(true); // 打开时间选择模态框
+            })
         }
     }
     ///
@@ -104,6 +117,56 @@ export default function Workday() {
         }
     }
     const [disno, setDisno] = useState(false);
+
+
+    //cellRender
+    //当前日期
+    const [currentDate, setCurrentDate] = useState(new Date());
+    useEffect(() => {
+        renderMounted()
+    }, []);
+    const [allList, setAllList] = useState([]);
+    const renderMounted = () => {
+        countDay({
+            "startDate": "2000-01-01",
+            "endDate": "3000-01-01"
+            // "endDate": convertTemplateStringToDate(currentDate)
+        }).then(res => {
+            console.log(res.data.data.hList);
+            setAllList(res.data.data.hList);
+        })
+    };
+    const getLabelAndColor = (value) => {
+        switch (value) {
+            case '1':
+                return { label: '法定假期', color: 'gold' };
+            case '11':
+                return { label: '自定义假期', color: 'cyan' };
+            case '0':
+                return { label: '上班', color: 'magenta' };
+            case '-1':
+                return { label: '补班', color: 'blue' };
+            default:
+                return { label: '', color: 'transparent' }; // Default case
+        }
+    };
+
+    const cellRender = (value) => {
+        const date = value.format('YYYY-MM-DD');
+        const item = allList.find(item => item.date === date);
+        const { label, color } = item ? getLabelAndColor(item.isDayOff) : getLabelAndColor('');
+
+        return (
+            <div>
+                <div>
+                    <Tag color={color}>
+                        {label}
+                    </Tag>
+                </div>
+                <div><p>备注：</p>{item ? item.name : ''}</div>
+            </div>
+        );
+    };
     return (
         <Card style={{ height: 'calc(100vh - 112px)', overflowY: 'auto' }}>
             <div style={{ marginBottom: '-44px' }}>
@@ -112,6 +175,7 @@ export default function Workday() {
             </div>
             <Calendar
                 onChange={handleDateSelect}
+                cellRender={cellRender}
             />
             <Modal title={selectedDate} open={timeModalOpen} onOk={TimehandleOk} onCancel={TimehandleCancel}>
                 <div style={{ marginTop: '20px' }}>
