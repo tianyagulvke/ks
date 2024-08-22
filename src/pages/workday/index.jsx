@@ -5,7 +5,7 @@ import "./styles.scss"
 const { RangePicker } = DatePicker;
 
 export default function Workday() {
-    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [notes, setNotes] = useState("");
 
     const handleDateSelect = (date) => {
