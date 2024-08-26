@@ -241,11 +241,15 @@ export default function Workday() {
                         disno ? (
                             <div style={{ marginTop: '12px', marginBottom: '12px' }}>
                                 <div style={{ lineHeight: '28px', fontSize: '16px' }}>{convertTemplateStringToDate(timeRange[0])} 到 {convertTemplateStringToDate(timeRange[1])}：</div>
-                                <div style={{ lineHeight: '28px' }}>补班：{badDayCount}天</div>
-                                <div style={{ lineHeight: '28px' }}>周末：{weekendCount}天</div>
-                                <div style={{ lineHeight: '28px' }}>工作日：{workDayCount}天</div>
-                                <div style={{ lineHeight: '28px' }}>法定假期：{holidayCount}天</div>
-                                <div style={{ lineHeight: '28px' }}>自定义假期：{issetHolidayCount}天</div>
+                                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                    <div style={{ lineHeight: '28px' }}>工作日：{workDayCount}天</div>
+                                    <div style={{ lineHeight: '28px', marginLeft: '12px' }}>补班：{badDayCount}天</div>
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                    <div style={{ lineHeight: '28px', }}>周末：{weekendCount}天</div>
+                                    <div style={{ lineHeight: '28px', marginLeft: '12px' }}>法定假期：{holidayCount}天</div>
+                                    <div style={{ lineHeight: '28px', marginLeft: '12px' }}>自定义假期：{issetHolidayCount}天</div>
+                                </div>
                             </div>
                         ) : (
                             <div style={{ marginTop: '30px', marginBottom: '30px' }}>
