@@ -6,7 +6,7 @@ import "./styles.scss"
 const { RangePicker } = DatePicker;
 
 export default function Workday() {
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState();
     const [notes, setNotes] = useState("");
 
     const handleDateSelect = (date) => {
@@ -46,14 +46,13 @@ export default function Workday() {
     ////////////////编辑
     const [editlist, setEditlist] = useState([]);
     const editTime = () => {
-        if (selectedDate === null) {
+        if (selectedDate === null || selectedDate === "" || selectedDate === undefined) {
             message.error("请选择日期");
         } else {
             countDay({
                 "startDate": convertTemplateStringToDate(selectedDate),
                 "endDate": convertTemplateStringToDate(selectedDate)
             }).then(res => {
-                console.log(res.data.data.hList);
                 setEditlist(res.data.data.hList);
                 setSurveyName(res.data.data.hList[0].isDayOff.toString())
                 setNotes(res.data.data.hList[0].name)
@@ -106,6 +105,7 @@ export default function Workday() {
     const [holidayCount, setHolidayCount] = useState(0); //法定假期
     const [issetHolidayCount, setIssetHolidayCount] = useState(0); //自定义假期
     const [workDayCount, setWorkDayCount] = useState(0); //工作日
+    const [weekendCount, setWeekendCount] = useState(0); //工作日
     const isShowTimeBtn = () => {
         if (timeRange[0] !== null && timeRange[1] !== null) {
             countDay({
@@ -122,6 +122,7 @@ export default function Workday() {
                 setHolidayCount(res.data.data.holidayCount);
                 setIssetHolidayCount(res.data.data.setHolidayCount);
                 setWorkDayCount(res.data.data.workDayCount);
+                setWeekendCount(res.data.data.weekendCount);
             }).catch(err => {
                 message.error("网络异常 请检查网络设置");
             })
@@ -160,6 +161,8 @@ export default function Workday() {
                 return { label: '上班', color: 'magenta' };
             case '-1':
                 return { label: '补班', color: 'blue' };
+            case '2':
+                return { label: '周末', color: 'green' };
             default:
                 return { label: '', color: 'transparent' }; // Default case
         }
@@ -239,6 +242,7 @@ export default function Workday() {
                             <div style={{ marginTop: '12px', marginBottom: '12px' }}>
                                 <div style={{ lineHeight: '28px', fontSize: '16px' }}>{convertTemplateStringToDate(timeRange[0])} 到 {convertTemplateStringToDate(timeRange[1])}：</div>
                                 <div style={{ lineHeight: '28px' }}>补班：{badDayCount}天</div>
+                                <div style={{ lineHeight: '28px' }}>周末：{weekendCount}天</div>
                                 <div style={{ lineHeight: '28px' }}>工作日：{workDayCount}天</div>
                                 <div style={{ lineHeight: '28px' }}>法定假期：{holidayCount}天</div>
                                 <div style={{ lineHeight: '28px' }}>自定义假期：{issetHolidayCount}天</div>
