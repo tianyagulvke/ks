@@ -17,4 +17,12 @@
       display: none;
     }
   }
+  :where(
+      .css-dev-only-do-not-override-1c0na6j
+    ).ant-picker-calendar.ant-picker-calendar-full
+    .ant-picker-panel
+    .ant-picker-body
+    th {
+    text-align: left !important;
+  }
 }

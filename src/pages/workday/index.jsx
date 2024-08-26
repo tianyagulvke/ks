@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Calendar, Input, Tag, Button, Modal, Select, message, DatePicker, Empty } from 'antd';
+import moment from 'moment';
 import { countDay, manualSet } from '@/api/workday'
 import "./styles.scss"
 const { RangePicker } = DatePicker;
@@ -79,16 +80,24 @@ export default function Workday() {
     const [showtimeModalOpen, setShowtimeModalOpen] = useState(false); // 控制时间选择模态框的显示与隐藏
     const showTimehandleOk = () => {
         setDisno(false);
-        setTimeRange([null, null]);
+        setTimeRange([
+            moment().startOf('year').subtract(0, 'year'),
+            moment().endOf('year').subtract(0, 'year')
+        ]);
         setShowtimeModalOpen(false);
     }
     const showTimehandleCancel = () => {
         setShowtimeModalOpen(false);
     };
     const showTimeBtn = () => {
+        isShowTimeBtn()
         setShowtimeModalOpen(true); // 打开时间选择模态框
     }
-    const [timeRange, setTimeRange] = useState([null, null]); // 时间范围
+    // const [timeRange, setTimeRange] = useState([null, null]); // 时间范围
+    const [timeRange, setTimeRange] = useState([
+        moment().startOf('year').subtract(0, 'year'),
+        moment().endOf('year').subtract(0, 'year')
+    ]);
     const onTimeRangeChange = (dates, dateStrings) => {
         setTimeRange([dates[0], dates[1]]);
         console.log(dateStrings); // 输出时间范围
@@ -127,6 +136,7 @@ export default function Workday() {
     //当前日期
     const [currentDate, setCurrentDate] = useState(new Date());
     useEffect(() => {
+        isShowTimeBtn()
         renderMounted()
     }, []);
     const [allList, setAllList] = useState([]);
@@ -220,7 +230,7 @@ export default function Workday() {
                 </Button>,
             ]}>
                 <div style={{ marginTop: '10px' }}>
-                    <RangePicker value={timeRange} onChange={onTimeRangeChange} />
+                    <RangePicker value={timeRange} onChange={onTimeRangeChange} format="YYYY-MM-DD" />
                     <Button style={{ marginLeft: '12px' }} type="primary" onClick={isShowTimeBtn}>查询</Button>
                 </div>
                 <div>
