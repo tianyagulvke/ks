@@ -79,24 +79,21 @@ export default function Workday() {
     const [showtimeModalOpen, setShowtimeModalOpen] = useState(false); // 控制时间选择模态框的显示与隐藏
     const showTimehandleOk = () => {
         setDisno(false);
-        setTimeRange([
-            moment().startOf('year').subtract(0, 'year'),
-            moment().endOf('year').subtract(0, 'year')
-        ]);
+        // setTimeRange([null, null]);
         setShowtimeModalOpen(false);
     }
     const showTimehandleCancel = () => {
         setShowtimeModalOpen(false);
     };
     const showTimeBtn = () => {
-        isShowTimeBtn()
+        // isShowTimeBtn()
         setShowtimeModalOpen(true); // 打开时间选择模态框
     }
-    // const [timeRange, setTimeRange] = useState([null, null]); // 时间范围
-    const [timeRange, setTimeRange] = useState([
-        moment().startOf('year').subtract(0, 'year'),
-        moment().endOf('year').subtract(0, 'year')
-    ]);
+    const [timeRange, setTimeRange] = useState([null, null]); // 时间范围
+    // const [timeRange, setTimeRange] = useState([
+    //     moment().startOf('year').subtract(0, 'year'),
+    //     moment().endOf('year').subtract(0, 'year')
+    // ]);
     const onTimeRangeChange = (dates, dateStrings) => {
         setTimeRange([dates[0], dates[1]]);
         console.log(dateStrings); // 输出时间范围
@@ -137,7 +134,7 @@ export default function Workday() {
     //当前日期
     const [currentDate, setCurrentDate] = useState(new Date());
     useEffect(() => {
-        isShowTimeBtn()
+        // isShowTimeBtn()
         renderMounted()
     }, []);
     const [allList, setAllList] = useState([]);
@@ -241,11 +238,11 @@ export default function Workday() {
                         disno ? (
                             <div style={{ marginTop: '12px', marginBottom: '12px' }}>
                                 <div style={{ lineHeight: '28px', fontSize: '16px' }}>{convertTemplateStringToDate(timeRange[0])} 到 {convertTemplateStringToDate(timeRange[1])}：</div>
-                                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                <div style={{ display: 'flex' }}>
                                     <div style={{ lineHeight: '28px' }}>工作日：{workDayCount}天</div>
                                     <div style={{ lineHeight: '28px', marginLeft: '12px' }}>补班：{badDayCount}天</div>
                                 </div>
-                                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                <div style={{ display: 'flex' }}>
                                     <div style={{ lineHeight: '28px', }}>周末：{weekendCount}天</div>
                                     <div style={{ lineHeight: '28px', marginLeft: '12px' }}>法定假期：{holidayCount}天</div>
                                     <div style={{ lineHeight: '28px', marginLeft: '12px' }}>自定义假期：{issetHolidayCount}天</div>
