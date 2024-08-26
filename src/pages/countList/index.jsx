@@ -83,6 +83,10 @@ export default function CountList() {
             dataIndex: 'phone',
         },
         {
+            title: '邮箱',
+            dataIndex: 'email',
+        },
+        {
             title: '应聘岗位',
             dataIndex: 'surveyName',
             sorter: {
