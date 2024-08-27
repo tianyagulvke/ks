@@ -78,7 +78,7 @@ export default function Workday() {
     const [showtimeModalOpen, setShowtimeModalOpen] = useState(false); // 控制时间选择模态框的显示与隐藏
     const showTimehandleOk = () => {
         setDisno(false);
-        // setTimeRange([null, null]);
+        setTimeRange([null, null]);
         setShowtimeModalOpen(false);
     }
     const showTimehandleCancel = () => {
