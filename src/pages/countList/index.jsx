@@ -117,29 +117,43 @@ export default function CountList() {
         }
     ]);
     const [isModalOpen, setIsModalOpen] = useState(false); // 控制模态框显示与隐藏的状态
-    const handleOk = () => {
+    const handleOk = async () => {
         let valid = true;
         const updatedJdt = [];
-        jdtList.forEach((item) => {
-            if (item.score === '') {
+
+        // 检查分数有效性
+        const validateScore = (score) => {
+            if (score === '') {
                 message.warning("请打分");
-                valid = false;
-            } else if (item.score > 100) {
+                return false;
+            }
+            if (score > 100) {
                 message.error("分数不能超过100");
-                valid = false;
-            } else if (item.score < 0) {
+                return false;
+            }
+            if (score < 0) {
                 message.error("分数不能小于0");
-                valid = false;
-            } else {
+                return false;
+            }
+            return true;
+        };
+
+        jdtList.forEach((item) => {
+            if (validateScore(item.score)) {
                 updatedJdt.push(Number(item.score));
+            } else {
+                valid = false;
             }
         });
+
         if (valid) {
             setJdt(updatedJdt);
-            readAnswerDetail({
-                answerId: answerId,
-                shortScores: updatedJdt
-            }).then(res => {
+            try {
+                const res = await readAnswerDetail({
+                    answerId: answerId,
+                    shortScores: updatedJdt
+                });
+
                 if (res.data.code === 200) {
                     if (jdtList.length > 0) {
                         message.success("阅卷成功");
@@ -147,11 +161,14 @@ export default function CountList() {
                     setIsModalOpen(false);
                     fetchData(page.pageNum, page.pageSize);
                 }
-            });
+            } catch (error) {
+                message.error("提交分数失败");
+            }
         } else {
             setJdt([]);
         }
     };
+
 
     const handleCancel = () => {
         setJdt()

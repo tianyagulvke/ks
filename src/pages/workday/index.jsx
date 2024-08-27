@@ -137,15 +137,16 @@ export default function Workday() {
         renderMounted()
     }, []);
     const [allList, setAllList] = useState([]);
-    const renderMounted = () => {
-        countDay({
-            "startDate": "2000-01-01",
-            "endDate": "3000-01-01"
-            // "endDate": convertTemplateStringToDate(currentDate)
-        }).then(res => {
-            console.log(res.data.data.hList);
-            setAllList(res.data.data.hList);
-        })
+    const renderMounted = async () => {
+        try {
+            const startDate = "2000-01-01";
+            const endDate = "3000-01-01";
+            const response = await countDay({ startDate, endDate });
+            const data = response.data.data.hList;
+            setAllList(data);
+        } catch (error) {
+            message.error("Error fetching data:", error);
+        }
     };
     const getLabelAndColor = (value) => {
         switch (value) {
