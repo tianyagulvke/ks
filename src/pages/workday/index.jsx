@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Calendar, Input, Tag, Button, Modal, Select, message, DatePicker, Empty } from 'antd';
-import moment from 'moment';
 import { countDay, manualSet } from '@/api/workday'
 import "./styles.scss"
 const { RangePicker } = DatePicker;
