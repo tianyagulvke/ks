@@ -236,16 +236,20 @@ export default function Workday() {
                 <div>
                     {
                         disno ? (
-                            <div style={{ marginTop: '12px', marginBottom: '12px' }}>
-                                <div style={{ lineHeight: '28px', fontSize: '16px' }}>{convertTemplateStringToDate(timeRange[0])} 到 {convertTemplateStringToDate(timeRange[1])}：</div>
-                                <div style={{ display: 'flex' }}>
-                                    <div style={{ lineHeight: '28px' }}>工作日：{workDayCount}天</div>
-                                    <div style={{ lineHeight: '28px', marginLeft: '12px' }}>补班：{badDayCount}天</div>
+                            <div style={{ marginTop: '12px', marginBottom: '12px', padding: '10px', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#FFF' }}>
+                                <div style={{ lineHeight: '28px', fontSize: '16px', fontWeight: 'bold', borderBottom: '1px solid #ddd', paddingBottom: '8px', marginBottom: '8px' }}>
+                                    {convertTemplateStringToDate(timeRange[0])} 到 {convertTemplateStringToDate(timeRange[1])}：
                                 </div>
-                                <div style={{ display: 'flex' }}>
-                                    <div style={{ lineHeight: '28px', }}>周末：{weekendCount}天</div>
-                                    <div style={{ lineHeight: '28px', marginLeft: '12px' }}>法定假期：{holidayCount}天</div>
-                                    <div style={{ lineHeight: '28px', marginLeft: '12px' }}>自定义假期：{issetHolidayCount}天</div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                    <div style={{ display: 'flex', lineHeight: '28px', padding: '8px', border: '1px solid #ddd', borderRadius: '4px', backgroundColor: '#fff' }}>
+                                        <div>工作日：{workDayCount}天</div>
+                                        <div style={{ marginLeft: '12px' }}>补班：{badDayCount}天</div>
+                                    </div>
+                                    <div style={{ display: 'flex', lineHeight: '28px', padding: '8px', border: '1px solid #ddd', borderRadius: '4px', backgroundColor: '#fff' }}>
+                                        <div>周末：{weekendCount}天</div>
+                                        <div style={{ marginLeft: '12px' }}>法定假期：{holidayCount}天</div>
+                                        <div style={{ marginLeft: '12px' }}>自定义假期：{issetHolidayCount}天</div>
+                                    </div>
                                 </div>
                             </div>
                         ) : (
