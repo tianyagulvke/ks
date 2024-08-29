@@ -1,27 +1,32 @@
-import { get, post, axiosInstance } from '@/utils/request';
+import { get, post, axiosInstance } from "@/utils/request";
 
 // 生成试卷
 export const getImpQues = async (data: any) => {
-  return post('/answer/generateSurvey', data);
+  return post("/answer/generateSurvey", data);
 };
 
 // 提交试卷
 export const submitImpQues = async (data: any) => {
-  return post('/answer/commitSurvey', data);
+  return post("/answer/commitSurvey", data);
 };
 
-export const getAnswerRecordPage = (data?: object) => post('/answer/getAnswerRecordPage', data);
+export const getAnswerRecordPage = (data?: object) =>
+  post("/answer/getAnswerRecordPage", data);
 
-export const readShortAnswerList = (data?: object) => post('/answer/readShortAnswerList', data);
+export const readShortAnswerList = (data?: object) =>
+  post("/answer/readShortAnswerList", data);
+export const deleteAnswerRecords = (data?: object) =>
+  post(`/answer/deleteAnswerRecords?aIds=${data}`);
 
-export const readAnswerDetail = (data?: object) => post('/answer/readAnswerDetail', data);
+export const readAnswerDetail = (data?: object) =>
+  post("/answer/readAnswerDetail", data);
 
 export const importQuestion = (data: any) =>
   axiosInstance.request({
-    url: '/survey/importQuestion',
-    method: 'post',
+    url: "/survey/importQuestion",
+    method: "post",
     data,
     headers: {
-      'Content-Type': 'multipart/form-data',
+      "Content-Type": "multipart/form-data",
     },
   });

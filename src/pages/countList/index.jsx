@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Pagination, Button, Modal, Input, message, Card, Select, Radio, Empty } from "antd";
-import { getAnswerRecordPage, readShortAnswerList, readAnswerDetail } from '@/api';
+import { Table, Pagination, Button, Modal, Input, message, Card, Select, Radio, Empty, Popconfirm } from "antd";
+import { getAnswerRecordPage, readShortAnswerList, readAnswerDetail, deleteAnswerRecords } from '@/api';
 import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
 import './index.scss'
 export default function CountList() {
@@ -110,6 +110,17 @@ export default function CountList() {
             render: (text, record) => (
                 <>
                     <a onClick={() => Marking(record)}>阅卷</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <Popconfirm
+                        title="删除"
+                        description={`确认要删除 ${record.userName} 的答题记录吗？`}
+                        onConfirm={() => confirm(record)}
+                        onCancel={cancel}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <a>删除</a>
+                    </Popconfirm>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <a onClick={() => sjMarking(record)}>查看详情</a>
                 </>
@@ -242,6 +253,20 @@ export default function CountList() {
             pageNum: 1,
         });
     }
+
+    const confirm = (record) => {
+        deleteAnswerRecords(record.id).then(res => {
+            if (res.data.code === 200) {
+                fetchData(1, page.pageSize);
+                message.success('删除成功');
+            } else {
+                message.error("删除失败");
+            }
+        })
+    };
+    const cancel = (e) => {
+        // console.log(e);
+    };
     return (
         <Card style={{ height: 'calc(100vh - 112px)', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
